@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "test": "cross-env ENVIRONMENT=testing jest --watch --verbose=true",
+    "test": "cross-env NODE_ENV=testing jest --watch --verbose=true",
     "server": "nodemon index.js"
   },
   "dependencies": {
