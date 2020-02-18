@@ -1,8 +1,7 @@
-
 exports.seed = function(knex) {
-  return knex('technologiesPref').del()
+  return knex('technologies_pref').del()
     .then(function () {
-      return knex('technologiesPref').insert([
+      return knex('technologies_pref').insert([
         {
           tech_id: 1,
           user_id: 1

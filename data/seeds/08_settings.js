@@ -1,4 +1,3 @@
-
 exports.seed = function(knex) {
   return knex('settings').del()
     .then(function () {

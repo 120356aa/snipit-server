@@ -6,9 +6,8 @@ exports.up = function(knex, Promise) {
         tbl.boolean("ad_toggle");
         tbl.integer("user_id")
             .references("id")
-            .inTable("users")
-            .notNullable();
-    })
+            .inTable("users");
+    });
   };
   
 exports.down = function(knex, Promise) {

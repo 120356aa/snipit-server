@@ -1,16 +1,14 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable("comments", tbl => {
         tbl.increments();
-        tbl.text("comment").notNullable();
-        tbl.timestamp("created_at").notNullable();
+        tbl.text("comment");
+        tbl.timestamp("created_at");
         tbl.integer("user_id")
             .references("id")
-            .inTable("users")
-            .notNullable();
+            .inTable("users");
         tbl.integer("snippet_id")
             .references("id")
-            .inTable("snippets")
-            .notNullable();
+            .inTable("snippets");
     })
   };
   
