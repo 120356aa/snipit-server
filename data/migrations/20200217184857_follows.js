@@ -1,5 +1,5 @@
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable("following", tbl => {
+    return knex.schema.createTable("follows", tbl => {
         tbl.integer("followed_user").notNullable();
         tbl.integer("view_status").notNullable();
         tbl.timestamp("created_at").notNullable();
@@ -11,5 +11,5 @@ exports.up = function(knex, Promise) {
   };
   
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists("following");
+    return knex.schema.dropTableIfExists("follows");
 };

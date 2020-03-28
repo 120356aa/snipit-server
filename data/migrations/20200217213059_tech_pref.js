@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable("technologies_pref", tbl => {
+    return knex.schema.createTable("tech_pref", tbl => {
         tbl.integer("tech_id")
             .references("id")
-            .inTable("technologies")
+            .inTable("tech")
             .notNullable();
         tbl.integer("user_id")
             .references("id")
@@ -12,5 +12,5 @@ exports.up = function(knex, Promise) {
   };
   
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists("technologies_pref");
+    return knex.schema.dropTableIfExists("tech_pref");
 };

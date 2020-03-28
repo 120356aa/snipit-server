@@ -6,10 +6,10 @@ exports.up = function(knex, Promise) {
             .notNullable();
         tbl.integer("tech_id")
             .references("id")
-            .inTable("technologies")
+            .inTable("tech")
             .notNullable();
     })
-  };
+};
   
 exports.down = function(knex, Promise) {
     return knex.schema.dropTableIfExists("tags");
