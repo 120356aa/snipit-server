@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable("technologies", tbl => {
         tbl.increments();
-        tbl.varchar("technology");
+        tbl.varchar("technology").notNullable();
     })
   };
   
