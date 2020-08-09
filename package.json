@@ -1,7 +1,7 @@
 {
   "name": "snipit-server",
   "version": "1.0.0",
-  "description": "SnipIt Server",
+  "description": "code-square",
   "main": "index.js",
   "repository": "https://github.com/120356aa/snipit-server.git",
   "author": "Sn0w aka 120356aa",
@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "cross-env NODE_ENV=testing jest --watch --verbose=true",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "lint": "eslint /"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -21,8 +22,13 @@
     "jest": "^25.1.0",
     "knex": "^0.20.13",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.2",
     "pg": "^7.18.2",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4"
   }
 }

@@ -2,14 +2,14 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    client: 'pg',
+    client: 'sqlite3',
     connection: process.env.DB_URL,
     migrations: { directory: './data/migrations' },
     seeds: { directory: './data/seeds' },
   },
 
   testing: {
-    client: 'pg',
+    client: 'sqlite3',
     connection: process.env.DB_URL,
     useNullAsDefault: true,
     migrations: { directory: './data/migrations' },
