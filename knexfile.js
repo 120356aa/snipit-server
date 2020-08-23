@@ -3,14 +3,19 @@ require('dotenv').config();
 module.exports = {
   development: {
     client: 'sqlite3',
-    connection: process.env.DB_URL,
+    connection: {
+      filename: './data/codesquare.sqlite3'
+    },
+    useNullAsDefault: true,
     migrations: { directory: './data/migrations' },
     seeds: { directory: './data/seeds' },
   },
 
   testing: {
     client: 'sqlite3',
-    connection: process.env.DB_URL,
+    connection: {
+      filename: './data/codesquare.sqlite3'
+    },
     useNullAsDefault: true,
     migrations: { directory: './data/migrations' },
     seeds: { directory: './data/seeds' },
@@ -19,6 +24,10 @@ module.exports = {
   production: {
     client: 'pg',
     connection: process.env.DB_URL,
+    pool: {
+      min: 2,
+      max: 10
+    },
     migrations: { directory: __dirname + './data/migrations' },
     seeds: { directory: __dirname +  './data/seeds' },
   },
