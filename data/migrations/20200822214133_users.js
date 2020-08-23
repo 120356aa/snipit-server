@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
         .notNullable();
     tbl.text("about");
     tbl.timestamp('created_at')
+        .notNullable()
         .defaultTo(knex.fn.now());
   })
 };
