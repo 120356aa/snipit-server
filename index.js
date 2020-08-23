@@ -17,7 +17,7 @@ const corsOptions = {
 
 const server = express();
 
-// init sever
+// init server
 server.use(
     express.json(),
     cors(corsOptions),
