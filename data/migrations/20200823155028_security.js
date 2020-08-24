@@ -1,5 +1,11 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable("security", tbl => {
+        tbl.integer("user_id")
+            .references("id")
+            .inTable("users")
+            .notNullable()
+            .unique()
+            .index();
         tbl.integer("strikes")
             .notNullable();
         tbl.integer("account_type_id")
@@ -10,12 +16,6 @@ exports.up = function(knex, Promise) {
             .references("id")
             .inTable("security_clearance")
             .notNullable();
-        tbl.integer("user_id")
-            .references("id")
-            .inTable("users")
-            .notNullable()
-            .unique()
-            .index();
     })
 };
 

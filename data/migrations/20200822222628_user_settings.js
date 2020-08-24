@@ -1,5 +1,10 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable("user_settings", tbl => {
+        tbl.integer("user_id")
+            .notNullable()
+            .references("id")
+            .inTable("users")
+            .index();
         tbl.boolean("dark_mode")
             .notNullable();
         tbl.boolean("expert_mode")
@@ -12,11 +17,6 @@ exports.up = function(knex, Promise) {
             .notNullable();
         tbl.boolean("ad_toggle")
             .notNullable();
-        tbl.integer("user_id")
-            .notNullable()
-            .references("id")
-            .inTable("users")
-            .index();
     })
 };
 
