@@ -4,11 +4,11 @@ exports.up = function(knex, Promise) {
     tbl.uuid("uuid")
         .notNullable()
         .unique();
-    tbl.text("display_name")
+    tbl.varchar("display_name")
         .notNullable();
     tbl.text("image")
         .notNullable();
-    tbl.text("about");
+    tbl.varchar("about");
     tbl.timestamp('created_at')
         .notNullable()
         .defaultTo(knex.fn.now());
