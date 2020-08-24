@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
     tbl.text("image")
         .notNullable();
     tbl.varchar("about");
-    tbl.timestamp('created_at')
+    tbl.timestamp("created_at")
         .notNullable()
         .defaultTo(knex.fn.now());
   })
