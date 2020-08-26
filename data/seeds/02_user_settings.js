@@ -1,5 +1,3 @@
-let faker = require('faker');
-
 exports.seed = function(knex) {
   return knex('user_settings').truncate()
     .then(function () {
