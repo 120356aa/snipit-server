@@ -4,10 +4,16 @@ exports.seed = function(knex) {
     .then(function () {
       return knex('security_clearance').insert([
         {
-          security_level: 'public'
+          security_level: 'user'
         },
         {
-          security_level: 'private'
+          security_level: 'mod'
+        },
+        {
+          security_level: 'admin'
+        },
+        {
+          security_level: 'godmode'
         }
       ]);
     });
