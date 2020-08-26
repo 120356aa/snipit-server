@@ -4,7 +4,7 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-exports.seed = function(knex) {
+exports.seed = function(knex, Promise) {
   return knex('comment_reports').truncate()
     .then(function () {
       return knex('comment_reports').insert([

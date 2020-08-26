@@ -1,4 +1,4 @@
-exports.seed = function(knex) {
+exports.seed = function(knex, Promise) {
   return knex('technologies').truncate()
     .then(function () {
       return knex('technologies').insert([

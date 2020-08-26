@@ -1,6 +1,6 @@
 let faker = require('faker');
 
-exports.seed = function(knex) {
+exports.seed = function(knex, Promise) {
   return knex('snippet_reports').truncate()
     .then(function () {
       return knex('snippet_reports').insert([
