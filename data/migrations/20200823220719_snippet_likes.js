@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
             .notNullable();
         tbl.boolean("view_status")
             .notNullable();
-        tbl.timestamp("created_ad")
+        tbl.timestamp("created_at")
             .notNullable()
             .defaultTo(knex.fn.now());
     })
