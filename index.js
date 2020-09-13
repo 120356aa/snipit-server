@@ -14,7 +14,7 @@ const morgan = require("morgan"); // Debugging Tool
 const technologiesRouter = require("./api/technologies/technologiesRouter.js");
 const accountTypeRouter = require("./api/accountType/accountTypeRouter");
 const securityClearanceRouter = require("./api/securityClearance/securityClearanceRouter");
-// const authorizationRouter = require("./api/authorization/authorizationRouter");
+const snippetAuthorizationRouter = require("./api/snippetAuthorization/authorizationRouterRouter");
 
 // cors setup
 const corsOptions = {
@@ -42,7 +42,7 @@ server.get("/", (req, res) => res.status(200).json("Server running"));
 server.use("/technologies", technologiesRouter);
 server.use("/account_type", accountTypeRouter);
 server.use("/security_clearance", securityClearanceRouter);
-// server.use("/authorization", authorizationRouter);
+server.use("/snippet_authorization", snippetAuthorizationRouter);
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
