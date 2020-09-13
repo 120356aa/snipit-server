@@ -4,7 +4,7 @@ const db = require("../../data/db.js");
 
 describe("Security Clearance Route Handlers", () => {
   beforeEach(async () => {
-    await db("security_clearance").insert({ security_level: "Public" });
+    await db("security_clearance").insert({ security_level: "User" });
   });
 
   afterEach(async () => {
@@ -25,7 +25,7 @@ describe("Security Clearance Route Handlers", () => {
   
       it("res returns data", async () => {
         const res = await request(server).get("/security_clearance");
-        expect(res.body).toEqual([{ id: 1, security_level: "Public" }]);
+        expect(res.body).toEqual([{ id: 1, security_level: "User" }]);
       });
     });
 
@@ -43,7 +43,7 @@ describe("Security Clearance Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/security_clearance/1");
-      expect(res.body).toEqual({ id: 1, security_level: "Public" });
+      expect(res.body).toEqual({ id: 1, security_level: "User" });
     });
   });
 
@@ -52,22 +52,22 @@ describe("Security Clearance Route Handlers", () => {
     it("res status 201", async () => {
       const res = await request(server)
         .post("/security_clearance")
-        .send({ security_level: "Private" });
+        .send({ security_level: "Admin" });
       expect(res.status).toBe(201);
     });
 
     it("res with json", async () => {
       const res = await request(server)
         .post("/security_clearance")
-        .send({ security_level: "Private" });
+        .send({ security_level: "Admin" });
       expect(res.type).toMatch(/json/i);
     });
 
     it("res with correct data", async () => {
       const res = await request(server)
         .post("/security_clearance")
-        .send({ security_level: "Private" });
-      expect(res.body[1]).toEqual({ id: 2, security_level: "Private" });
+        .send({ security_level: "Admin" });
+      expect(res.body[1]).toEqual({ id: 2, security_level: "Admin" });
     });
   });
 
@@ -98,21 +98,21 @@ describe("Security Clearance Route Handlers", () => {
   // REMOVE SECURITY CLEARANCE
   describe("DELETE /:id", () => {
     it("res status 202", async () => {
-      await request(server).post("/security_clearance").send({ security_level: "Private" });
+      await request(server).post("/security_clearance").send({ security_level: "Admin" });
       const res = await request(server).del("/security_clearance/1");
       expect(res.status).toBe(202);
     });
 
     it("res with json", async () => {
-      await request(server).post("/security_clearance").send({ security_level: "Private" });
+      await request(server).post("/security_clearance").send({ security_level: "Admin" });
       const res = await request(server).del("/security_clearance/1");
       expect(res.type).toMatch(/json/i);
     });
 
     it("res with correct data", async () => {
-      await request(server).post("/security_clearance").send({ security_level: "Private" });
+      await request(server).post("/security_clearance").send({ security_level: "Admin" });
       const res = await request(server).del("/security_clearance/1");
-      expect(res.body[0]).toEqual({ id: 2, security_level: "Private" });
+      expect(res.body[0]).toEqual({ id: 2, security_level: "Admin" });
     });
   });
 });

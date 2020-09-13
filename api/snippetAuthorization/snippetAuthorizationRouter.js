@@ -61,4 +61,18 @@ snippetAuthorizationRouter.put("/:id", async (req, res) => {
   }
 });
 
+// REMOVE SNIPPET AUTHORIZATION
+snippetAuthorizationRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const removeSnippetAuthorization = await db.removeSnippetAuthorization(id);
+  if (removeSnippetAuthorization) {
+    const rows = await db.getAll();
+    res.status(202).json(rows);
+  } else {
+    res.status(500).json({ message: "Unable to remove item" });
+  }
+});
+
+
 module.exports = snippetAuthorizationRouter;

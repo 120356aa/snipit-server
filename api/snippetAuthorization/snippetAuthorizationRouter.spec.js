@@ -94,4 +94,25 @@ describe("Snippet Authorization Route Handlers", () => {
       expect(res.body[0]).toEqual({ id: 1, authorization: "Pleb" });
     });
   });
+
+  // REMOVE SNIPPET AUTHORIZATION
+  describe("DELETE /:id", () => {
+    it("res status 202", async () => {
+      await request(server).post("/snippet_authorization").send({ authorization: "Private" });
+      const res = await request(server).del("/snippet_authorization/1");
+      expect(res.status).toBe(202);
+    });
+
+    it("res with json", async () => {
+      await request(server).post("/snippet_authorization").send({ authorization: "Private" });
+      const res = await request(server).del("/snippet_authorization/1");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      await request(server).post("/snippet_authorization").send({ authorization: "Private" });
+      const res = await request(server).del("/snippet_authorization/1");
+      expect(res.body[0]).toEqual({ id: 2, authorization: "Private" });
+    });
+  });
 });

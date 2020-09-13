@@ -5,7 +5,7 @@ module.exports = {
   getSnippetAuthorizationById,
   addSnippetAuthorization,
   updateSnippetAuthorization,
-  // removeSnippetAuthorization,
+  removeSnippetAuthorization,
   checkForSnippetAuthorization
 };
 
@@ -29,11 +29,11 @@ async function updateSnippetAuthorization(id, changes) {
           .update(changes);
 }
 
-// async function removeSnippetAuthorization(id) {
-//   return db("snippet_authorization")
-//           .where("id", Number(id))
-//           .del();
-// }
+async function removeSnippetAuthorization(id) {
+  return db("snippet_authorization")
+          .where("id", Number(id))
+          .del();
+}
 
 async function checkForSnippetAuthorization(newSnippetAuthorization) {
   return db("snippet_authorization")
