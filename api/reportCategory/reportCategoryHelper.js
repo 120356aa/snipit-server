@@ -2,7 +2,7 @@ const db = require("../../data/db.js");
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
   // addAccountType,
   // updateAccountType,
   // removeAccountType,
@@ -13,10 +13,10 @@ async function getAll() {
   return db("report_category");
 }
 
-// async function getById(id) {
-//   return db("report_category")
-//           .where("id", Number(id));
-// }
+async function getById(id) {
+  return db("report_category")
+          .where("id", Number(id));
+}
 
 // async function addAccountType(newAccountType) {
 //   return db("report_category")

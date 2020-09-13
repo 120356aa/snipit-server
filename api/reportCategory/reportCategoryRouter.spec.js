@@ -27,5 +27,23 @@ describe("Report Category Route Handlers", () => {
       const res = await request(server).get("/report_category");
       expect(res.body).toEqual([{ id: 1, category: "Spam" }]);
     });
-  });  
+  });
+
+  // GET BY ID
+  describe("GET /:id", () => {
+    it("res status 200", async () => {
+      const res = await request(server).get("/report_category/1");
+      expect(res.status).toBe(200);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server).get("/report_category/1");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server).get("/report_category/1");
+      expect(res.body).toEqual({ id: 1, category: "Spam" });
+    });
+  });
 });
