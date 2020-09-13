@@ -10,7 +10,7 @@ module.exports = {
 };
 
 async function getAll() {
-  return db("technologies");
+  return db("security_clearance");
 }
 
 // async function getTechnologyById(id) {
