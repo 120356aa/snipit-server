@@ -4,7 +4,7 @@ module.exports = {
   getAll,
   getAccountTypeById,
   addAccountType,
-  // updateAccountType,
+  updateAccountType,
   // removeAccountType,
   checkForAccountType
 };
@@ -21,6 +21,12 @@ async function getAccountTypeById(id) {
 async function addAccountType(newAccountType) {
   return db("account_type")
           .insert(newAccountType);
+}
+
+async function updateAccountType(id, changes) {
+  return db("account_type")
+          .where("id", Number(id))
+          .update(changes);
 }
 
 async function checkForAccountType(newAccountType) {

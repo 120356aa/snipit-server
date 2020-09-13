@@ -70,4 +70,28 @@ describe("Account Type Route Handlers", () => {
       expect(res.body[1]).toEqual({ id: 2, type: "Admin" });
     });
   });
+
+  // EDIT ACCOUNT TYPE
+  describe("PUT /:id", () => {
+    it("res status 202", async () => {
+      const res = await request(server)
+        .put("/account_type/1")
+        .send({ type: "Pleb" });
+      expect(res.status).toBe(202);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .put("/account_type/1")
+        .send({ type: "Pleb" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .put("/account_type/1")
+        .send({ type: "Pleb" });
+      expect(res.body[0]).toEqual({ id: 1, type: "Pleb" });
+    });
+  });
 });

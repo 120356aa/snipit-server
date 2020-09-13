@@ -42,4 +42,23 @@ accountTypeRouter.post("/", async (req, res) => {
   }
 });
 
+// UPDATE ACCOUNT TYPE
+accountTypeRouter.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  const checkExisting = await db.checkForAccountType(changes);
+  if (checkExisting.length > 0) {
+    res.status(409).json({ message: "Account Type Already Exists" });
+  } else {
+    const updatedAccountType = await db.updateAccountType(id, changes);
+    if (updatedAccountType) {
+      const rows = await db.getAll();
+      res.status(202).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to update item" });
+    }
+  }
+});
+
 module.exports = accountTypeRouter;
