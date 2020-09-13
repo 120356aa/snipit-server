@@ -22,4 +22,21 @@ technologiesRouter.get("/:id", async (req, res) => {
   }
 });
 
+technologiesRouter.post("/", async (req, res) => {
+  const newTechnology = req.body;
+
+  const dupTechnology = await db.checkForTechnology(newTechnology);
+  if (dupTechnology.length > 0) {
+    res.status(409).json({ message: "Technology Already Exists" });
+  } else {
+    const ids = await db.addTechnology(newTechnology);
+    if (ids) {
+      const rows = await db.getAll();
+      res.status(201).json(rows);
+    } else {
+      res.status(500).json({ message: "An Unknown Error Occurd" });
+    }
+  }
+});
+
 module.exports = technologiesRouter;

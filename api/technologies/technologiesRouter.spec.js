@@ -4,14 +4,15 @@ const db = require("../../data/db.js");
 
 describe("Technologies Route Handlers", () => {
   beforeEach(async () => {
-    await db("technologies").insert({ id: 1, technology: "React" });
+    await db("technologies").insert({ technology: "React" });
   });
 
   afterEach(async () => {
     await db("technologies").truncate();
   });
 
-  describe("Get /", () => {
+  // GET All
+  describe("GET /", () => {
     it("res status 200", async () => {
       const res = await request(server).get("/technologies");
       expect(res.status).toBe(200);
@@ -28,7 +29,8 @@ describe("Technologies Route Handlers", () => {
     });
   });
 
-  describe("Get /id", () => {
+  // GET BY ID
+  describe("GET /:id", () => {
     it("res status 200", async () => {
       const res = await request(server).get("/technologies/1");
       expect(res.status).toBe(200);
@@ -44,4 +46,36 @@ describe("Technologies Route Handlers", () => {
       expect(res.body).toEqual({ id: 1, technology: "React" });
     });
   });
+
+  // ADD TECHNOLOGY
+  describe("POST /:id", () => {
+    it("res status 201", async () => {
+      const res = await request(server)
+        .post("/technologies")
+        .send({ technology: "Javascript" });
+      expect(res.status).toBe(201);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .post("/technologies")
+        .send({ technology: "Javascript" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .post("/technologies")
+        .send({ technology: "Javascript" });
+      expect(res.body).toEqual([
+        { id: 1, technology: "React" },
+        { id: 2, technology: "Javascript" },
+      ]);
+    });
+  });
+
+  // EDIT TECHNOLOGY
+  //   describe("PUT /:id", () => {
+
+  //   });
 });
