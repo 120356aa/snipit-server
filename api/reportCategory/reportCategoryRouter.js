@@ -26,13 +26,13 @@ reportCategoryRouter.get("/:id", async (req, res) => {
 
 // ADD REPORT CATEGORY
 reportCategoryRouter.post("/", async (req, res) => {
-  const newReportCategory = req.body;
+  const newItem = req.body;
 
-  const checkExisting = await db.checkExisting(newReportCategory);
+  const checkExisting = await db.checkExisting(newItem);
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {
-    const ids = await db.addReportCategory(newReportCategory);
+    const ids = await db.addReportCategory(newItem);
     if (ids) {
       const rows = await db.getAll();
       res.status(201).json(rows);
@@ -51,8 +51,8 @@ reportCategoryRouter.put("/:id", async (req, res) => {
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Category Already Exists" });
   } else {
-    const updatedReportCategory = await db.updateReportCategory(id, changes);
-    if (updatedReportCategory) {
+    const updateItem = await db.updateReportCategory(id, changes);
+    if (updateItem) {
       const rows = await db.getAll();
       res.status(202).json(rows);
     } else {
@@ -65,8 +65,8 @@ reportCategoryRouter.put("/:id", async (req, res) => {
 reportCategoryRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const removeReportCategory = await db.removeReportCategory(id);
-  if (removeReportCategory) {
+  const removeItem = await db.removeReportCategory(id);
+  if (removeItem) {
     const rows = await db.getAll();
     res.status(202).json(rows);
   } else {

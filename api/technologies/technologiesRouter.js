@@ -26,13 +26,13 @@ technologiesRouter.get("/:id", async (req, res) => {
 
 // ADD TECHNOLOGY
 technologiesRouter.post("/", async (req, res) => {
-  const newTechnology = req.body;
+  const newItem = req.body;
 
-  const checkExisting = await db.checkExisting(newTechnology);
+  const checkExisting = await db.checkExisting(newItem);
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {
-    const ids = await db.addTechnology(newTechnology);
+    const ids = await db.addTechnology(newItem);
     if (ids) {
       const rows = await db.getAll();
       res.status(201).json(rows);
@@ -51,8 +51,8 @@ technologiesRouter.put("/:id", async (req, res) => {
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Technology Already Exists" });
   } else {
-    const updatedTechnology = await db.updateTechnology(id, changes);
-    if (updatedTechnology) {
+    const updateItem = await db.updateTechnology(id, changes);
+    if (updateItem) {
       const rows = await db.getAll();
       res.status(202).json(rows);
     } else {
@@ -65,8 +65,8 @@ technologiesRouter.put("/:id", async (req, res) => {
 technologiesRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const removeTechnology = await db.removeTechnology(id);
-  if (removeTechnology) {
+  const removeItem = await db.removeTechnology(id);
+  if (removeItem) {
     const rows = await db.getAll();
     res.status(202).json(rows);
   } else {

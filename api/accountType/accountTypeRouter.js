@@ -26,13 +26,13 @@ accountTypeRouter.get("/:id", async (req, res) => {
 
 // ADD ACCOUNT TYPE
 accountTypeRouter.post("/", async (req, res) => {
-  const newAccountType = req.body;
+  const newItem = req.body;
 
-  const checkExisting = await db.checkExisting(newAccountType);
+  const checkExisting = await db.checkExisting(newItem);
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {
-    const ids = await db.addAccountType(newAccountType);
+    const ids = await db.addAccountType(newItem);
     if (ids) {
       const rows = await db.getAll();
       res.status(201).json(rows);
@@ -51,8 +51,8 @@ accountTypeRouter.put("/:id", async (req, res) => {
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Account Type Already Exists" });
   } else {
-    const updatedAccountType = await db.updateAccountType(id, changes);
-    if (updatedAccountType) {
+    const updateItem = await db.updateAccountType(id, changes);
+    if (updateItem) {
       const rows = await db.getAll();
       res.status(202).json(rows);
     } else {
@@ -65,8 +65,8 @@ accountTypeRouter.put("/:id", async (req, res) => {
 accountTypeRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const removeAccountType = await db.removeAccountType(id);
-  if (removeAccountType) {
+  const removeItem = await db.removeAccountType(id);
+  if (removeItem) {
     const rows = await db.getAll();
     res.status(202).json(rows);
   } else {
