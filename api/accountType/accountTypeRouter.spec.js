@@ -4,7 +4,7 @@ const db = require("../../data/db.js");
 
 describe("Account Type Route Handlers", () => {
   beforeEach(async () => {
-    await db("account_type").insert({ type: "Owner" });
+    await db("account_type").insert({ type: "Free" });
   });
 
   afterEach(async () => {
@@ -25,7 +25,7 @@ describe("Account Type Route Handlers", () => {
 
     it("res returns data", async () => {
       const res = await request(server).get("/account_type");
-      expect(res.body).toEqual([{ id: 1, type: "Owner" }]);
+      expect(res.body).toEqual([{ id: 1, type: "Free" }]);
     });
   });
 
@@ -43,7 +43,7 @@ describe("Account Type Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/account_type/1");
-      expect(res.body).toEqual({ id: 1, type: "Owner" });
+      expect(res.body).toEqual({ id: 1, type: "Free" });
     });
   });
 
@@ -52,22 +52,22 @@ describe("Account Type Route Handlers", () => {
     it("res status 201", async () => {
       const res = await request(server)
         .post("/account_type")
-        .send({ type: "Admin" });
+        .send({ type: "Premium" });
       expect(res.status).toBe(201);
     });
 
     it("res with json", async () => {
       const res = await request(server)
         .post("/account_type")
-        .send({ type: "Admin" });
+        .send({ type: "Premium" });
       expect(res.type).toMatch(/json/i);
     });
 
     it("res with correct data", async () => {
       const res = await request(server)
         .post("/account_type")
-        .send({ type: "Admin" });
-      expect(res.body[1]).toEqual({ id: 2, type: "Admin" });
+        .send({ type: "Premium" });
+      expect(res.body[1]).toEqual({ id: 2, type: "Premium" });
     });
   });
 
@@ -98,21 +98,21 @@ describe("Account Type Route Handlers", () => {
   // REMOVE ACCOUNT TYPE
   describe("DELETE /:id", () => {
     it("res status 202", async () => {
-      await request(server).post("/account_type").send({ type: "Pleb" });
+      await request(server).post("/account_type").send({ type: "Premium" });
       const res = await request(server).del("/account_type/1");
       expect(res.status).toBe(202);
     });
 
     it("res with json", async () => {
-      await request(server).post("/account_type").send({ type: "Pleb" });
+      await request(server).post("/account_type").send({ type: "Premium" });
       const res = await request(server).del("/account_type/1");
       expect(res.type).toMatch(/json/i);
     });
 
     it("res with correct data", async () => {
-      await request(server).post("/account_type").send({ type: "Pleb" });
+      await request(server).post("/account_type").send({ type: "Premium" });
       const res = await request(server).del("/account_type/1");
-      expect(res.body[0]).toEqual({ id: 2, type: "Pleb" });
+      expect(res.body[0]).toEqual({ id: 2, type: "Premium" });
     });
   });
 });

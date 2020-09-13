@@ -13,7 +13,7 @@ const morgan = require("morgan"); // Debugging Tool
 // const snippetsRouter = require("./api/snippets/snippetsRouter");
 const technologiesRouter = require("./api/technologies/technologiesRouter.js");
 const accountTypeRouter = require("./api/accountType/accountTypeRouter");
-// const securityClearanceRouter = require("./api/securityClearance/securityClearanceRouter");
+const securityClearanceRouter = require("./api/securityClearance/securityClearanceRouter");
 // const authorizationRouter = require("./api/authorization/authorizationRouter");
 
 // cors setup
@@ -41,7 +41,7 @@ server.get("/", (req, res) => res.status(200).json("Server running"));
 // Admin Routes
 server.use("/technologies", technologiesRouter);
 server.use("/account_type", accountTypeRouter);
-// server.use("/securityClearance", securityClearanceRouter);
+server.use("/security_clearance", securityClearanceRouter);
 // server.use("/authorization", authorizationRouter);
 
 if (process.env.NODE_ENV !== 'test') {
