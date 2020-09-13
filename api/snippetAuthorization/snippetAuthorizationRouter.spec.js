@@ -43,7 +43,7 @@ describe("Snippet Authorization Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/snippet_authorization/1");
-      expect(res.body).toEqual({ id: 1, authorization: "Public" });
+      expect(res.body).toEqual([{ id: 1, authorization: "Public" }]);
     });
   });
 

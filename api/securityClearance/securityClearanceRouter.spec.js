@@ -43,7 +43,7 @@ describe("Security Clearance Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/security_clearance/1");
-      expect(res.body).toEqual({ id: 1, security_level: "User" });
+      expect(res.body).toEqual([{ id: 1, security_level: "User" }]);
     });
   });
 

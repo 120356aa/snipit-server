@@ -8,37 +8,53 @@ const accountTypeRouter = express.Router();
 
 // GET ALL
 accountTypeRouter.get("/", async (req, res) => {
-  const rows = await db.getAll();
-  res.status(200).json(rows);
+  try {
+    const rows = await db.getAll();
+    if (rows.length < 1) {
+      res.status(404).json({ err: "No items to show." });
+    } else {
+      res.status(200).json(rows);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // GET BY ID
 accountTypeRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const row = await db.getById(id);
-  if (row.length > 0) {
-    res.status(200).json(row[0]);
-  } else {
-    res.status(404).json({ message: "Item does not exist" });
-  };
+  try {
+    const rows = await db.getById(id);
+    if (rows.length < 1) {
+      res.status(404).json({ err: "Item does not exist." });
+    } else {
+      res.status(200).json(rows);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // ADD ACCOUNT TYPE
 accountTypeRouter.post("/", async (req, res) => {
   const newItem = req.body;
 
-  const checkExisting = await db.checkExisting(newItem);
-  if (checkExisting.length > 0) {
-    res.status(409).json({ message: "Item Already Exists" });
-  } else {
-    const ids = await db.addAccountType(newItem);
-    if (ids) {
-      const rows = await db.getAll();
-      res.status(201).json(rows);
+  try {
+    const checkExisting = await db.checkExisting(newItem);
+    if (checkExisting.length > 0) {
+      res.status(409).json({ err: "Item already exists." });
     } else {
-      res.status(500).json({ message: "Unable to add new item" });
+      const ids = await db.addAccountType(newItem);
+      if (ids) {
+        const rows = await db.getAll();
+        res.status(201).json(rows);
+      } else {
+        res.status(400).json({ err: "Unable to add item." })
+      }
     }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
@@ -47,17 +63,21 @@ accountTypeRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  const checkExisting = await db.checkExisting(changes);
-  if (checkExisting.length > 0) {
-    res.status(409).json({ message: "Account Type Already Exists" });
-  } else {
-    const updateItem = await db.updateAccountType(id, changes);
-    if (updateItem) {
-      const rows = await db.getAll();
-      res.status(202).json(rows);
+  try {
+    const checkExisting = await db.checkExisting(changes);
+    if (checkExisting.length > 0) {
+      res.status(409).json({ err: "Item already exists" });
     } else {
-      res.status(500).json({ message: "Unable to update item" });
+      const updateItem = await db.updateAccountType(id, changes);
+      if (updateItem) {
+        const rows = await db.getAll();
+        res.status(202).json(rows);
+      } else {
+        res.status(400).json({ err: "Unable to add item." });
+      }
     }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
@@ -65,12 +85,16 @@ accountTypeRouter.put("/:id", async (req, res) => {
 accountTypeRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const removeItem = await db.removeAccountType(id);
-  if (removeItem) {
-    const rows = await db.getAll();
-    res.status(202).json(rows);
-  } else {
-    res.status(500).json({ message: "Unable to remove item" });
+  try {
+    const removeItem = await db.removeAccountType(id);
+    if (removeItem) { 
+      const rows = await db.getAll();
+      res.status(202).json(rows);
+    } else {
+      res.status(400).json({ err: "Unable to remove item." });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

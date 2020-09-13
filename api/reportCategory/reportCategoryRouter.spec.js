@@ -43,7 +43,7 @@ describe("Report Category Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/report_category/1");
-      expect(res.body).toEqual({ id: 1, category: "Spam" });
+      expect(res.body).toEqual([{ id: 1, category: "Spam" }]);
     });
   });
 

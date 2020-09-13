@@ -43,7 +43,7 @@ describe("Technologies Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/technologies/1");
-      expect(res.body).toEqual({ id: 1, technology: "React" });
+      expect(res.body).toEqual([{ id: 1, technology: "React" }]);
     });
   });
 
