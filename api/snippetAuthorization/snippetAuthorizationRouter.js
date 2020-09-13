@@ -16,7 +16,7 @@ snippetAuthorizationRouter.get("/", async (req, res) => {
 snippetAuthorizationRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const row = await db.getSnippetAuthorizationById(id);
+  const row = await db.getById(id);
   if (row.length > 0) {
     res.status(200).json(row[0]);
   } else {
@@ -28,8 +28,8 @@ snippetAuthorizationRouter.get("/:id", async (req, res) => {
 snippetAuthorizationRouter.post("/", async (req, res) => {
   const newSnippetAuthorization = req.body;
 
-  const dupSnippetAuthorization = await db.checkForSnippetAuthorization(newSnippetAuthorization);
-  if (dupSnippetAuthorization.length > 0) {
+  const checkExisting = await db.checkExisting(newSnippetAuthorization);
+  if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {
     const ids = await db.addSnippetAuthorization(newSnippetAuthorization);
@@ -47,7 +47,7 @@ snippetAuthorizationRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  const checkExisting = await db.checkForSnippetAuthorization(changes);
+  const checkExisting = await db.checkExisting(changes);
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {

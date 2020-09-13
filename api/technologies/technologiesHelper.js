@@ -2,18 +2,18 @@ const db = require("../../data/db.js");
 
 module.exports = {
   getAll,
-  getTechnologyById,
+  getById,
   addTechnology,
   updateTechnology,
   removeTechnology,
-  checkForTechnology
+  checkExisting
 };
 
 async function getAll() {
   return db("technologies");
 }
 
-async function getTechnologyById(id) {
+async function getById(id) {
   return db("technologies")
           .where("id", Number(id));
 }
@@ -35,7 +35,7 @@ async function removeTechnology(id) {
           .del();
 }
 
-async function checkForTechnology(newTechnology) {
+async function checkExisting(newTechnology) {
   return db("technologies")
           .where("technology", newTechnology.technology);
 }

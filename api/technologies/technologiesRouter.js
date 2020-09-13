@@ -16,7 +16,7 @@ technologiesRouter.get("/", async (req, res) => {
 technologiesRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const row = await db.getTechnologyById(id);
+  const row = await db.getById(id);
   if (row.length > 0) {
     res.status(200).json(row[0]);
   } else {
@@ -28,8 +28,8 @@ technologiesRouter.get("/:id", async (req, res) => {
 technologiesRouter.post("/", async (req, res) => {
   const newTechnology = req.body;
 
-  const dupTechnology = await db.checkForTechnology(newTechnology);
-  if (dupTechnology.length > 0) {
+  const checkExisting = await db.checkExisting(newTechnology);
+  if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {
     const ids = await db.addTechnology(newTechnology);
@@ -47,7 +47,7 @@ technologiesRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  const checkExisting = await db.checkForTechnology(changes);
+  const checkExisting = await db.checkExisting(changes);
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Technology Already Exists" });
   } else {

@@ -16,7 +16,7 @@ securityClearanceRouter.get("/", async (req, res) => {
 securityClearanceRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const row = await db.getSecurityClearanceById(id);
+  const row = await db.getById(id);
   if (row.length > 0) {
     res.status(200).json(row[0]);
   } else {
@@ -28,8 +28,8 @@ securityClearanceRouter.get("/:id", async (req, res) => {
 securityClearanceRouter.post("/", async (req, res) => {
   const newSecurityClearance = req.body;
 
-  const dupSecurityClearance = await db.checkForSecurityClearance(newSecurityClearance);
-  if (dupSecurityClearance.length > 0) {
+  const checkExisting = await db.checkExisting(newSecurityClearance);
+  if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {
     const ids = await db.addSecurityClearance(newSecurityClearance);
@@ -47,7 +47,7 @@ securityClearanceRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  const checkExisting = await db.checkForSecurityClearance(changes);
+  const checkExisting = await db.checkExisting(changes);
   if (checkExisting.length > 0) {
     res.status(409).json({ message: "Item Already Exists" });
   } else {

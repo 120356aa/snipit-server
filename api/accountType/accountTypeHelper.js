@@ -2,18 +2,18 @@ const db = require("../../data/db.js");
 
 module.exports = {
   getAll,
-  getAccountTypeById,
+  getById,
   addAccountType,
   updateAccountType,
   removeAccountType,
-  checkForAccountType
+  checkExisting
 };
 
 async function getAll() {
   return db("account_type");
 }
 
-async function getAccountTypeById(id) {
+async function getById(id) {
   return db("account_type")
           .where("id", Number(id));
 }
@@ -35,7 +35,7 @@ async function removeAccountType(id) {
           .del();
 }
 
-async function checkForAccountType(newAccountType) {
+async function checkExisting(newAccountType) {
   return db("account_type")
           .where("type", newAccountType.type);
 }
