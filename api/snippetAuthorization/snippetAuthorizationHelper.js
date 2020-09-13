@@ -3,10 +3,10 @@ const db = require("../../data/db.js");
 module.exports = {
   getAll,
   getSnippetAuthorizationById,
-  // addSnippetAuthorization,
-  // updateSnippetAuthorization,
+  addSnippetAuthorization,
+  updateSnippetAuthorization,
   // removeSnippetAuthorization,
-  // checkForSnippetAuthorization
+  checkForSnippetAuthorization
 };
 
 async function getAll() {
@@ -18,16 +18,16 @@ async function getSnippetAuthorizationById(id) {
           .where("id", Number(id));
 }
 
-// async function addSnippetAuthorization(newSnippetAuthorization) {
-//   return db("snippet_authorization")
-//           .insert(newSnippetAuthorization);
-// }
+async function addSnippetAuthorization(newSnippetAuthorization) {
+  return db("snippet_authorization")
+          .insert(newSnippetAuthorization);
+}
 
-// async function updateSnippetAuthorization(id, changes) {
-//   return db("snippet_authorization")
-//           .where("id", Number(id))
-//           .update(changes);
-// }
+async function updateSnippetAuthorization(id, changes) {
+  return db("snippet_authorization")
+          .where("id", Number(id))
+          .update(changes);
+}
 
 // async function removeSnippetAuthorization(id) {
 //   return db("snippet_authorization")
@@ -35,7 +35,7 @@ async function getSnippetAuthorizationById(id) {
 //           .del();
 // }
 
-// async function checkForSnippetAuthorization(newSnippetAuthorization) {
-//   return db("snippet_authorization")
-//           .where("authorization", newSnippetAuthorization.authorization);
-// }
+async function checkForSnippetAuthorization(newSnippetAuthorization) {
+  return db("snippet_authorization")
+          .where("authorization", newSnippetAuthorization.authorization);
+}

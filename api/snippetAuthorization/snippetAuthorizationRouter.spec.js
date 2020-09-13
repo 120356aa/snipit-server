@@ -4,7 +4,7 @@ const db = require("../../data/db.js");
 
 describe("Snippet Authorization Route Handlers", () => {
   beforeEach(async () => {
-    await db("snippet_authorization").insert({ authorization: "User" });
+    await db("snippet_authorization").insert({ authorization: "Public" });
   });
 
   afterEach(async () => {
@@ -25,7 +25,7 @@ describe("Snippet Authorization Route Handlers", () => {
 
     it("res returns data", async () => {
       const res = await request(server).get("/snippet_authorization");
-      expect(res.body).toEqual([{ id: 1, authorization: "User" }]);
+      expect(res.body).toEqual([{ id: 1, authorization: "Public" }]);
     });
   });
 
@@ -43,7 +43,55 @@ describe("Snippet Authorization Route Handlers", () => {
 
     it("res with correct data", async () => {
       const res = await request(server).get("/snippet_authorization/1");
-      expect(res.body).toEqual({ id: 1, authorization: "User" });
+      expect(res.body).toEqual({ id: 1, authorization: "Public" });
+    });
+  });
+
+  // ADD SNIPPET AUTHORIZATION
+  describe("POST /:id", () => {
+    it("res status 201", async () => {
+      const res = await request(server)
+        .post("/snippet_authorization")
+        .send({ authorization: "Private" });
+      expect(res.status).toBe(201);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .post("/snippet_authorization")
+        .send({ authorization: "Private" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .post("/snippet_authorization")
+        .send({ authorization: "Private" });
+      expect(res.body[1]).toEqual({ id: 2, authorization: "Private" });
+    });
+  });
+
+  // EDIT SNIPPET AUTHORIZATION
+  describe("PUT /:id", () => {
+    it("res status 202", async () => {
+      const res = await request(server)
+        .put("/snippet_authorization/1")
+        .send({ authorization: "Pleb" });
+      expect(res.status).toBe(202);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .put("/snippet_authorization/1")
+        .send({ authorization: "Pleb" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .put("/snippet_authorization/1")
+        .send({ authorization: "Pleb" });
+      expect(res.body[0]).toEqual({ id: 1, authorization: "Pleb" });
     });
   });
 });

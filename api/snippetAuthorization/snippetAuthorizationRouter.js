@@ -24,4 +24,41 @@ snippetAuthorizationRouter.get("/:id", async (req, res) => {
   }
 });
 
+// ADD SNIPPET AUTHORIZATION
+snippetAuthorizationRouter.post("/", async (req, res) => {
+  const newSnippetAuthorization = req.body;
+
+  const dupSnippetAuthorization = await db.checkForSnippetAuthorization(newSnippetAuthorization);
+  if (dupSnippetAuthorization.length > 0) {
+    res.status(409).json({ message: "Item Already Exists" });
+  } else {
+    const ids = await db.addSnippetAuthorization(newSnippetAuthorization);
+    if (ids) {
+      const rows = await db.getAll();
+      res.status(201).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to add new item" });
+    }
+  }
+});
+
+// UPDATE SNIPPET AUTHORIZATION
+snippetAuthorizationRouter.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  const checkExisting = await db.checkForSnippetAuthorization(changes);
+  if (checkExisting.length > 0) {
+    res.status(409).json({ message: "Item Already Exists" });
+  } else {
+    const updatedSnippetAuthorization = await db.updateSnippetAuthorization(id, changes);
+    if (updatedSnippetAuthorization) {
+      const rows = await db.getAll();
+      res.status(202).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to update item" });
+    }
+  }
+});
+
 module.exports = snippetAuthorizationRouter;
