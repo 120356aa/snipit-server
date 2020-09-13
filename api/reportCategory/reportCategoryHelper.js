@@ -4,7 +4,7 @@ module.exports = {
   getAll,
   getById,
   addReportCategory,
-  // updateReportCategory,
+  updateReportCategory,
   // removeReportCategory,
   checkExisting
 };
@@ -23,11 +23,11 @@ async function addReportCategory(newReportCategory) {
           .insert(newReportCategory);
 }
 
-// async function updateReportCategory(id, changes) {
-//   return db("report_category")
-//           .where("id", Number(id))
-//           .update(changes);
-// }
+async function updateReportCategory(id, changes) {
+  return db("report_category")
+          .where("id", Number(id))
+          .update(changes);
+}
 
 // async function removeReportCategory(id) {
 //   return db("report_category")

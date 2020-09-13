@@ -42,4 +42,23 @@ reportCategoryRouter.post("/", async (req, res) => {
   }
 });
 
+// UPDATE REPORT CATEGORY
+reportCategoryRouter.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  const checkExisting = await db.checkExisting(changes);
+  if (checkExisting.length > 0) {
+    res.status(409).json({ message: "Category Already Exists" });
+  } else {
+    const updatedReportCategory = await db.updateReportCategory(id, changes);
+    if (updatedReportCategory) {
+      const rows = await db.getAll();
+      res.status(202).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to update item" });
+    }
+  }
+});
+
 module.exports = reportCategoryRouter;

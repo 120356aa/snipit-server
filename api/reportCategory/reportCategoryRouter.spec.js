@@ -70,4 +70,28 @@ describe("Report Category Route Handlers", () => {
       expect(res.body[1]).toEqual({ id: 2, category: "Duplicate" });
     });
   });
+
+    // EDIT REPORT CATEGORY
+    describe("PUT /:id", () => {
+      it("res status 202", async () => {
+        const res = await request(server)
+          .put("/report_category/1")
+          .send({ category: "Pleb" });
+        expect(res.status).toBe(202);
+      });
+  
+      it("res with json", async () => {
+        const res = await request(server)
+          .put("/report_category/1")
+          .send({ category: "Pleb" });
+        expect(res.type).toMatch(/json/i);
+      });
+  
+      it("res with correct data", async () => {
+        const res = await request(server)
+          .put("/report_category/1")
+          .send({ category: "Pleb" });
+        expect(res.body[0]).toEqual({ id: 1, category: "Pleb" });
+      });
+    });
 });
