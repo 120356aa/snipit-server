@@ -3,15 +3,13 @@ const server = require("../../index.js");
 const db = require("../../data/db.js");
 
 describe("Technologies Route Handlers", () => {
-  //   beforeEach(async () => {
-  //     await request(server)
-  //       .post("/technologies/")
-  //       .send({ id: 1, technology: "React" });
-  //   });
+  beforeEach(async () => {
+    await db("technologies").insert({ id: 1, technology: "React" });
+  });
 
-  //   afterEach(async () => {
-  //     await db("technologies").truncate();
-  //   });
+  afterEach(async () => {
+    await db("technologies").truncate();
+  });
 
   describe("Get /", () => {
     it("res status 200", async () => {
