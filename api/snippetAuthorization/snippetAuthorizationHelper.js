@@ -2,7 +2,7 @@ const db = require("../../data/db.js");
 
 module.exports = {
   getAll,
-  // getSnippetAuthorizationById,
+  getSnippetAuthorizationById,
   // addSnippetAuthorization,
   // updateSnippetAuthorization,
   // removeSnippetAuthorization,
@@ -13,10 +13,10 @@ async function getAll() {
   return db("snippet_authorization");
 }
 
-// async function getSnippetAuthorizationById(id) {
-//   return db("snippet_authorization")
-//           .where("id", Number(id));
-// }
+async function getSnippetAuthorizationById(id) {
+  return db("snippet_authorization")
+          .where("id", Number(id));
+}
 
 // async function addSnippetAuthorization(newSnippetAuthorization) {
 //   return db("snippet_authorization")

@@ -28,4 +28,22 @@ describe("Snippet Authorization Route Handlers", () => {
       expect(res.body).toEqual([{ id: 1, authorization: "User" }]);
     });
   });
+
+  // GET BY ID
+  describe("GET /:id", () => {
+    it("res status 200", async () => {
+      const res = await request(server).get("/snippet_authorization/1");
+      expect(res.status).toBe(200);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server).get("/snippet_authorization/1");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server).get("/snippet_authorization/1");
+      expect(res.body).toEqual({ id: 1, authorization: "User" });
+    });
+  });
 });
