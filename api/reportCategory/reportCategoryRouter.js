@@ -61,4 +61,17 @@ reportCategoryRouter.put("/:id", async (req, res) => {
   }
 });
 
+// REMOVE REPORT CATEGORY
+reportCategoryRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const removeReportCategory = await db.removeReportCategory(id);
+  if (removeReportCategory) {
+    const rows = await db.getAll();
+    res.status(202).json(rows);
+  } else {
+    res.status(500).json({ message: "Unable to remove item" });
+  }
+});
+
 module.exports = reportCategoryRouter;
