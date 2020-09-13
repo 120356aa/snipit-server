@@ -6,7 +6,7 @@ module.exports = {
   addTechnology,
   updateTechnology,
   removeTechnology,
-  checkForTechnology,
+  checkForTechnology
 };
 
 async function getAll() {

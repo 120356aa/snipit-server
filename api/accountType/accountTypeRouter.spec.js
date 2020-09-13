@@ -10,4 +10,12 @@ describe("Account Type Route Handlers", () => {
   afterEach(async () => {
     await db("account_type").truncate();
   });
+
+  // GET ALL
+  describe("GET /", () => {
+    it("res status 200", async () => {
+      const res = await request(server).get("/account_type");
+      expect(res.status).toBe(200);
+    });
+  });
 });

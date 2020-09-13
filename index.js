@@ -7,7 +7,7 @@ const APP_URL = process.env.APP_URL || "http://localhost:3000";
 const request = require("request");
 const helmet = require("helmet"); // Extra security
 const morgan = require("morgan"); // Debugging Tool
-const middlewares = require("./middlewares");
+// const middlewares = require("./middlewares");
 
 // const usersRouter = require("./api/users/usersRouter");
 // const snippetsRouter = require("./api/snippets/snippetsRouter");
@@ -40,12 +40,12 @@ server.get("/", (req, res) => res.status(200).json("Server running"));
 
 // Admin Routes
 server.use("/technologies", technologiesRouter);
-server.use("/accountType", accountTypeRouter);
+server.use("/account_type", accountTypeRouter);
 // server.use("/securityClearance", securityClearanceRouter);
 // server.use("/authorization", authorizationRouter);
 
-server.listen(PORT, () => {
-  console.log(`Listening on localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+};
 
 module.exports = server;
