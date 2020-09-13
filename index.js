@@ -12,7 +12,7 @@ const middlewares = require("./middlewares");
 // const usersRouter = require("./api/users/usersRouter");
 // const snippetsRouter = require("./api/snippets/snippetsRouter");
 const technologiesRouter = require("./api/technologies/technologiesRouter.js");
-// const accountTypeRouter = require("./api/accountType/accountTypeRouter");
+const accountTypeRouter = require("./api/accountType/accountTypeRouter");
 // const securityClearanceRouter = require("./api/securityClearance/securityClearanceRouter");
 // const authorizationRouter = require("./api/authorization/authorizationRouter");
 
@@ -40,7 +40,7 @@ server.get("/", (req, res) => res.status(200).json("Server running"));
 
 // Admin Routes
 server.use("/technologies", technologiesRouter);
-// server.use("/accountType", accountTypeRouter);
+server.use("/accountType", accountTypeRouter);
 // server.use("/securityClearance", securityClearanceRouter);
 // server.use("/authorization", authorizationRouter);
 

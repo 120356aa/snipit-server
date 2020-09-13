@@ -30,18 +30,19 @@ technologiesRouter.post("/", async (req, res) => {
 
   const dupTechnology = await db.checkForTechnology(newTechnology);
   if (dupTechnology.length > 0) {
-    res.status(409).json({ message: "Technology Already Exists" });
+    res.status(409).json({ message: "Item Already Exists" });
   } else {
     const ids = await db.addTechnology(newTechnology);
     if (ids) {
       const rows = await db.getAll();
       res.status(201).json(rows);
     } else {
-      res.status(500).json({ message: "An Unknown Error Occurd" });
+      res.status(500).json({ message: "Unable to add new item" });
     }
   }
 });
 
+// UPDATE TECHNOLOGY
 technologiesRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -55,8 +56,20 @@ technologiesRouter.put("/:id", async (req, res) => {
       const rows = await db.getAll();
       res.status(202).json(rows);
     } else {
-      res.status(500).json({ message: "An Unknown Error Occured" });
+      res.status(500).json({ message: "Unable to update item" });
     }
+  }
+});
+
+// REMOVE TECHNOLOGY
+technologiesRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const removeTechnology = await db.removeTechnology(id);
+  if (removeTechnology) {
+    const rows = await db.getAll();
+    res.status(202).json(rows);
+  } else {
+    res.status(500).json({ message: "Unable to remove item" });
   }
 });
 
