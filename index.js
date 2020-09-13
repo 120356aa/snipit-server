@@ -15,6 +15,7 @@ const technologiesRouter = require("./api/technologies/technologiesRouter.js");
 const accountTypeRouter = require("./api/accountType/accountTypeRouter");
 const securityClearanceRouter = require("./api/securityClearance/securityClearanceRouter");
 const snippetAuthorizationRouter = require("./api/snippetAuthorization/snippetAuthorizationRouter");
+const reportCategoryRouter = require("./api/reportCategory/reportCategoryRouter.js");
 
 // cors setup
 const corsOptions = {
@@ -43,6 +44,7 @@ server.use("/technologies", technologiesRouter);
 server.use("/account_type", accountTypeRouter);
 server.use("/security_clearance", securityClearanceRouter);
 server.use("/snippet_authorization", snippetAuthorizationRouter);
+server.use("/report_category", reportCategoryRouter);
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
