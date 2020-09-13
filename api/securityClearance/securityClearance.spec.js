@@ -28,4 +28,22 @@ describe("Security Clearance Route Handlers", () => {
         expect(res.body).toEqual([{ id: 1, security_level: "Public" }]);
       });
     });
+
+  // GET BY ID
+  describe("GET /:id", () => {
+    it("res status 200", async () => {
+      const res = await request(server).get("/security_clearance/1");
+      expect(res.status).toBe(200);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server).get("/security_clearance/1");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server).get("/security_clearance/1");
+      expect(res.body).toEqual({ id: 1, security_level: "Public" });
+    });
+  });
 });

@@ -20,7 +20,7 @@ technologiesRouter.get("/:id", async (req, res) => {
   if (row.length > 0) {
     res.status(200).json(row[0]);
   } else {
-    res.status(404).json({ message: "Not Found" });
+    res.status(404).json({ message: "Item Not Found" });
   }
 });
 
@@ -64,7 +64,7 @@ technologiesRouter.put("/:id", async (req, res) => {
 // REMOVE TECHNOLOGY
 technologiesRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  
+
   const removeTechnology = await db.removeTechnology(id);
   if (removeTechnology) {
     const rows = await db.getAll();

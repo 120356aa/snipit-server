@@ -2,7 +2,7 @@ const db = require("../../data/db.js");
 
 module.exports = {
   getAll,
-  // getSecurityClearanceById,
+  getSecurityClearanceById,
   // addSecurityClearance,
   // updateSecurityClearance,
   // removeSecurityClearance,
@@ -13,29 +13,29 @@ async function getAll() {
   return db("security_clearance");
 }
 
-// async function getTechnologyById(id) {
-//   return db("technologies")
-//           .where("id", Number(id));
+async function getSecurityClearanceById(id) {
+  return db("security_clearance")
+          .where("id", Number(id));
+}
+
+// async function addSecurityClearance(newSecurityClearance) {
+//   return db("security_clearance")
+//           .insert(newSecurityClearance);
 // }
 
-// async function addTechnology(newTechnology) {
-//   return db("technologies")
-//           .insert(newTechnology);
-// }
-
-// async function updateTechnology(id, changes) {
-//   return db("technologies")
+// async function updateSecurityClearance(id, changes) {
+//   return db("security_clearance")
 //           .where("id", Number(id))
 //           .update(changes);
 // }
 
-// async function removeTechnology(id) {
-//   return db("technologies")
+// async function removeSecurityClearance(id) {
+//   return db("security_clearance")
 //           .where("id", Number(id))
 //           .del();
 // }
 
-// async function checkForTechnology(newTechnology) {
-//   return db("technologies")
-//           .where("technology", newTechnology.technology);
+// async function checkForSecurityClearance(newSecurityClearance) {
+//   return db("security_clearance")
+//           .where("security_level", newSecurityClearance.security_level);
 // }
