@@ -14,7 +14,7 @@ const morgan = require("morgan"); // Debugging Tool
 const technologiesRouter = require("./api/technologies/technologiesRouter.js");
 const accountTypeRouter = require("./api/accountType/accountTypeRouter");
 const securityClearanceRouter = require("./api/securityClearance/securityClearanceRouter");
-const snippetAuthorizationRouter = require("./api/snippetAuthorization/authorizationRouterRouter");
+const snippetAuthorizationRouter = require("./api/snippetAuthorization/snippetAuthorizationRouter");
 
 // cors setup
 const corsOptions = {

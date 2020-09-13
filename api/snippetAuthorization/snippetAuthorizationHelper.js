@@ -1,7 +1,7 @@
 const db = require("../../data/db.js");
 
 module.exports = {
-  // getAll,
+  getAll,
   // getSnippetAuthorizationById,
   // addSnippetAuthorization,
   // updateSnippetAuthorization,
@@ -9,9 +9,9 @@ module.exports = {
   // checkForSnippetAuthorization
 };
 
-// async function getAll() {
-//   return db("snippet_authorization");
-// }
+async function getAll() {
+  return db("snippet_authorization");
+}
 
 // async function getSnippetAuthorizationById(id) {
 //   return db("snippet_authorization")
