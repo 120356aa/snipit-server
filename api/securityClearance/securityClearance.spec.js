@@ -46,4 +46,28 @@ describe("Security Clearance Route Handlers", () => {
       expect(res.body).toEqual({ id: 1, security_level: "Public" });
     });
   });
+
+  // ADD SECURITY CLEARANCE
+  describe("POST /:id", () => {
+    it("res status 201", async () => {
+      const res = await request(server)
+        .post("/security_clearance")
+        .send({ security_level: "Private" });
+      expect(res.status).toBe(201);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .post("/security_clearance")
+        .send({ security_level: "Private" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .post("/security_clearance")
+        .send({ security_level: "Private" });
+      expect(res.body[1]).toEqual({ id: 2, security_level: "Private" });
+    });
+  });
 });

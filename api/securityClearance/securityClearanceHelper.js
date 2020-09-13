@@ -3,10 +3,10 @@ const db = require("../../data/db.js");
 module.exports = {
   getAll,
   getSecurityClearanceById,
-  // addSecurityClearance,
+  addSecurityClearance,
   // updateSecurityClearance,
   // removeSecurityClearance,
-  // checkForSecurityClearance
+  checkForSecurityClearance
 };
 
 async function getAll() {
@@ -18,10 +18,10 @@ async function getSecurityClearanceById(id) {
           .where("id", Number(id));
 }
 
-// async function addSecurityClearance(newSecurityClearance) {
-//   return db("security_clearance")
-//           .insert(newSecurityClearance);
-// }
+async function addSecurityClearance(newSecurityClearance) {
+  return db("security_clearance")
+          .insert(newSecurityClearance);
+}
 
 // async function updateSecurityClearance(id, changes) {
 //   return db("security_clearance")
@@ -35,7 +35,7 @@ async function getSecurityClearanceById(id) {
 //           .del();
 // }
 
-// async function checkForSecurityClearance(newSecurityClearance) {
-//   return db("security_clearance")
-//           .where("security_level", newSecurityClearance.security_level);
-// }
+async function checkForSecurityClearance(newSecurityClearance) {
+  return db("security_clearance")
+          .where("security_level", newSecurityClearance.security_level);
+}

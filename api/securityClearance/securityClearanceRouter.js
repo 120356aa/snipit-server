@@ -24,4 +24,22 @@ securityClearanceRouter.get("/:id", async (req, res) => {
   }
 });
 
+// ADD TECHNOLOGY
+securityClearanceRouter.post("/", async (req, res) => {
+  const newSecurityClearance = req.body;
+
+  const dupSecurityClearance = await db.checkForSecurityClearance(newSecurityClearance);
+  if (dupSecurityClearance.length > 0) {
+    res.status(409).json({ message: "Item Already Exists" });
+  } else {
+    const ids = await db.addSecurityClearance(newSecurityClearance);
+    if (ids) {
+      const rows = await db.getAll();
+      res.status(201).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to add new item" });
+    }
+  }
+});
+
 module.exports = securityClearanceRouter;
