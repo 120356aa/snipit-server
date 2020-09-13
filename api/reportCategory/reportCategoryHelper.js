@@ -1,7 +1,7 @@
 const db = require("../../data/db.js");
 
 module.exports = {
-  // getAll,
+  getAll,
   // getById,
   // addAccountType,
   // updateAccountType,
@@ -9,33 +9,33 @@ module.exports = {
   // checkExisting
 };
 
-// async function getAll() {
-//   return db("account_type");
-// }
+async function getAll() {
+  return db("report_category");
+}
 
 // async function getById(id) {
-//   return db("account_type")
+//   return db("report_category")
 //           .where("id", Number(id));
 // }
 
 // async function addAccountType(newAccountType) {
-//   return db("account_type")
+//   return db("report_category")
 //           .insert(newAccountType);
 // }
 
 // async function updateAccountType(id, changes) {
-//   return db("account_type")
+//   return db("report_category")
 //           .where("id", Number(id))
 //           .update(changes);
 // }
 
 // async function removeAccountType(id) {
-//   return db("account_type")
+//   return db("report_category")
 //           .where("id", Number(id))
 //           .del();
 // }
 
 // async function checkExisting(newAccountType) {
-//   return db("account_type")
+//   return db("report_category")
 //           .where("type", newAccountType.type);
 // }

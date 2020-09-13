@@ -9,5 +9,23 @@ describe("Report Category Route Handlers", () => {
 
   afterEach(async () => {
     await db("report_category").truncate();
-  }); 
+  });
+
+  // GET ALL
+  describe("GET /", () => {
+    it("res status 200", async () => {
+      const res = await request(server).get("/report_category");
+      expect(res.status).toBe(200);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server).get("/report_category");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res returns data", async () => {
+      const res = await request(server).get("/report_category");
+      expect(res.body).toEqual([{ id: 1, category: "Spam" }]);
+    });
+  });  
 });
