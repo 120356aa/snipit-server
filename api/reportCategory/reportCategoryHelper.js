@@ -3,10 +3,10 @@ const db = require("../../data/db.js");
 module.exports = {
   getAll,
   getById,
-  // addAccountType,
-  // updateAccountType,
-  // removeAccountType,
-  // checkExisting
+  addReportCategory,
+  // updateReportCategory,
+  // removeReportCategory,
+  checkExisting
 };
 
 async function getAll() {
@@ -18,24 +18,24 @@ async function getById(id) {
           .where("id", Number(id));
 }
 
-// async function addAccountType(newAccountType) {
-//   return db("report_category")
-//           .insert(newAccountType);
-// }
+async function addReportCategory(newReportCategory) {
+  return db("report_category")
+          .insert(newReportCategory);
+}
 
-// async function updateAccountType(id, changes) {
+// async function updateReportCategory(id, changes) {
 //   return db("report_category")
 //           .where("id", Number(id))
 //           .update(changes);
 // }
 
-// async function removeAccountType(id) {
+// async function removeReportCategory(id) {
 //   return db("report_category")
 //           .where("id", Number(id))
 //           .del();
 // }
 
-// async function checkExisting(newAccountType) {
-//   return db("report_category")
-//           .where("type", newAccountType.type);
-// }
+async function checkExisting(newReportCategory) {
+  return db("report_category")
+          .where("category", newReportCategory.category);
+}

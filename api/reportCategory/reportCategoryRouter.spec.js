@@ -46,4 +46,28 @@ describe("Report Category Route Handlers", () => {
       expect(res.body).toEqual({ id: 1, category: "Spam" });
     });
   });
+
+  // ADD REPORT CATEGORY
+  describe("POST /:id", () => {
+    it("res status 201", async () => {
+      const res = await request(server)
+        .post("/report_category")
+        .send({ category: "Duplicate" });
+      expect(res.status).toBe(201);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .post("/report_category")
+        .send({ category: "Duplicate" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .post("/report_category")
+        .send({ category: "Duplicate" });
+      expect(res.body[1]).toEqual({ id: 2, category: "Duplicate" });
+    });
+  });
 });

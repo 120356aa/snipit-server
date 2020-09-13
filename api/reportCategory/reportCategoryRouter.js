@@ -24,4 +24,22 @@ reportCategoryRouter.get("/:id", async (req, res) => {
   };
 });
 
+// ADD REPORT CATEGORY
+reportCategoryRouter.post("/", async (req, res) => {
+  const newReportCategory = req.body;
+
+  const checkExisting = await db.checkExisting(newReportCategory);
+  if (checkExisting.length > 0) {
+    res.status(409).json({ message: "Item Already Exists" });
+  } else {
+    const ids = await db.addReportCategory(newReportCategory);
+    if (ids) {
+      const rows = await db.getAll();
+      res.status(201).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to add new item" });
+    }
+  }
+});
+
 module.exports = reportCategoryRouter;
