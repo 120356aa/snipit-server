@@ -70,4 +70,49 @@ describe("Security Clearance Route Handlers", () => {
       expect(res.body[1]).toEqual({ id: 2, security_level: "Private" });
     });
   });
+
+  // EDIT SECURITY CLEARANCE
+  describe("PUT /:id", () => {
+    it("res status 202", async () => {
+      const res = await request(server)
+        .put("/security_clearance/1")
+        .send({ security_level: "Pleb" });
+      expect(res.status).toBe(202);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .put("/security_clearance/1")
+        .send({ security_level: "Pleb" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .put("/security_clearance/1")
+        .send({ security_level: "Pleb" });
+      expect(res.body[0]).toEqual({ id: 1, security_level: "Pleb" });
+    });
+  });
+
+  // REMOVE SECURITY CLEARANCE
+  describe("DELETE /:id", () => {
+    it("res status 202", async () => {
+      await request(server).post("/security_clearance").send({ security_level: "Private" });
+      const res = await request(server).del("/security_clearance/1");
+      expect(res.status).toBe(202);
+    });
+
+    it("res with json", async () => {
+      await request(server).post("/security_clearance").send({ security_level: "Private" });
+      const res = await request(server).del("/security_clearance/1");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      await request(server).post("/security_clearance").send({ security_level: "Private" });
+      const res = await request(server).del("/security_clearance/1");
+      expect(res.body[0]).toEqual({ id: 2, security_level: "Private" });
+    });
+  });
 });

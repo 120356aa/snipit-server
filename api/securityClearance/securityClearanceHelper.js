@@ -4,8 +4,8 @@ module.exports = {
   getAll,
   getSecurityClearanceById,
   addSecurityClearance,
-  // updateSecurityClearance,
-  // removeSecurityClearance,
+  updateSecurityClearance,
+  removeSecurityClearance,
   checkForSecurityClearance
 };
 
@@ -23,17 +23,17 @@ async function addSecurityClearance(newSecurityClearance) {
           .insert(newSecurityClearance);
 }
 
-// async function updateSecurityClearance(id, changes) {
-//   return db("security_clearance")
-//           .where("id", Number(id))
-//           .update(changes);
-// }
+async function updateSecurityClearance(id, changes) {
+  return db("security_clearance")
+          .where("id", Number(id))
+          .update(changes);
+}
 
-// async function removeSecurityClearance(id) {
-//   return db("security_clearance")
-//           .where("id", Number(id))
-//           .del();
-// }
+async function removeSecurityClearance(id) {
+  return db("security_clearance")
+          .where("id", Number(id))
+          .del();
+}
 
 async function checkForSecurityClearance(newSecurityClearance) {
   return db("security_clearance")

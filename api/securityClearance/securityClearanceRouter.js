@@ -24,7 +24,7 @@ securityClearanceRouter.get("/:id", async (req, res) => {
   }
 });
 
-// ADD TECHNOLOGY
+// ADD SECURITY CLEARANCE
 securityClearanceRouter.post("/", async (req, res) => {
   const newSecurityClearance = req.body;
 
@@ -39,6 +39,38 @@ securityClearanceRouter.post("/", async (req, res) => {
     } else {
       res.status(500).json({ message: "Unable to add new item" });
     }
+  }
+});
+
+// UPDATE SECURITY CLEARANCE
+securityClearanceRouter.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  const checkExisting = await db.checkForSecurityClearance(changes);
+  if (checkExisting.length > 0) {
+    res.status(409).json({ message: "Item Already Exists" });
+  } else {
+    const updatedSecurityClearance = await db.updateSecurityClearance(id, changes);
+    if (updatedSecurityClearance) {
+      const rows = await db.getAll();
+      res.status(202).json(rows);
+    } else {
+      res.status(500).json({ message: "Unable to update item" });
+    }
+  }
+});
+
+// REMOVE SECURITY CLEARANCE
+securityClearanceRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const removeSecurityClearance = await db.removeSecurityClearance(id);
+  if (removeSecurityClearance) {
+    const rows = await db.getAll();
+    res.status(202).json(rows);
+  } else {
+    res.status(500).json({ message: "Unable to remove item" });
   }
 });
 
