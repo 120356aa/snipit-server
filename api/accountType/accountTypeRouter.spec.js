@@ -94,4 +94,25 @@ describe("Account Type Route Handlers", () => {
       expect(res.body[0]).toEqual({ id: 1, type: "Pleb" });
     });
   });
+
+  // REMOVE ACCOUNT TYPE
+  describe("DELETE /:id", () => {
+    it("res status 202", async () => {
+      await request(server).post("/account_type").send({ type: "Pleb" });
+      const res = await request(server).del("/account_type/1");
+      expect(res.status).toBe(202);
+    });
+
+    it("res with json", async () => {
+      await request(server).post("/account_type").send({ type: "Pleb" });
+      const res = await request(server).del("/account_type/1");
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      await request(server).post("/account_type").send({ type: "Pleb" });
+      const res = await request(server).del("/account_type/1");
+      expect(res.body[0]).toEqual({ id: 2, type: "Pleb" });
+    });
+  });
 });

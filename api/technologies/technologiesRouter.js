@@ -64,6 +64,7 @@ technologiesRouter.put("/:id", async (req, res) => {
 // REMOVE TECHNOLOGY
 technologiesRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
+  
   const removeTechnology = await db.removeTechnology(id);
   if (removeTechnology) {
     const rows = await db.getAll();

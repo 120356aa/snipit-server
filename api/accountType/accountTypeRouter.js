@@ -61,4 +61,17 @@ accountTypeRouter.put("/:id", async (req, res) => {
   }
 });
 
+// REMOVE ACCOUNT TYPE
+accountTypeRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const removeAccountType = await db.removeAccountType(id);
+  if (removeAccountType) {
+    const rows = await db.getAll();
+    res.status(202).json(rows);
+  } else {
+    res.status(500).json({ message: "Unable to remove item" });
+  }
+});
+
 module.exports = accountTypeRouter;
