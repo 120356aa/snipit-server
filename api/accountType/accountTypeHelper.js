@@ -3,10 +3,10 @@ const db = require("../../data/db.js");
 module.exports = {
   getAll,
   getAccountTypeById,
-  // addAccountType,
+  addAccountType,
   // updateAccountType,
   // removeAccountType,
-  // checkForAccountType
+  checkForAccountType
 };
 
 async function getAll() {
@@ -16,4 +16,14 @@ async function getAll() {
 async function getAccountTypeById(id) {
   return db("account_type")
           .where("id", Number(id));
+}
+
+async function addAccountType(newAccountType) {
+  return db("account_type")
+          .insert(newAccountType);
+}
+
+async function checkForAccountType(newAccountType) {
+  return db("account_type")
+          .where("type", newAccountType.type);
 }

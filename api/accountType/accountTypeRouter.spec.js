@@ -46,4 +46,28 @@ describe("Account Type Route Handlers", () => {
       expect(res.body).toEqual({ id: 1, type: "Owner" });
     });
   });
+
+  // ADD ACCOUNT TYPE
+  describe("POST /:id", () => {
+    it("res status 201", async () => {
+      const res = await request(server)
+        .post("/account_type")
+        .send({ type: "Admin" });
+      expect(res.status).toBe(201);
+    });
+
+    it("res with json", async () => {
+      const res = await request(server)
+        .post("/account_type")
+        .send({ type: "Admin" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .post("/account_type")
+        .send({ type: "Admin" });
+      expect(res.body[1]).toEqual({ id: 2, type: "Admin" });
+    });
+  });
 });
