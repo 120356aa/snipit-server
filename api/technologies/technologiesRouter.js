@@ -6,11 +6,13 @@ const { jwtKey } = require("../../auth/authenticate.js");
 const db = require("./technologiesHelper.js");
 const technologiesRouter = express.Router();
 
+// GET ALL
 technologiesRouter.get("/", async (req, res) => {
   const rows = await db.getAll();
   res.status(200).json(rows);
 });
 
+// GET BY ID
 technologiesRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -22,6 +24,7 @@ technologiesRouter.get("/:id", async (req, res) => {
   }
 });
 
+// ADD TECHNOLOGY
 technologiesRouter.post("/", async (req, res) => {
   const newTechnology = req.body;
 
@@ -35,6 +38,24 @@ technologiesRouter.post("/", async (req, res) => {
       res.status(201).json(rows);
     } else {
       res.status(500).json({ message: "An Unknown Error Occurd" });
+    }
+  }
+});
+
+technologiesRouter.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  const checkExisting = await db.checkForTechnology(changes);
+  if (checkExisting.length > 0) {
+    res.status(409).json({ message: "Technology Already Exists" });
+  } else {
+    const updatedTechnology = await db.updateTechnology(id, changes);
+    if (updatedTechnology) {
+      const rows = await db.getAll();
+      res.status(202).json(rows);
+    } else {
+      res.status(500).json({ message: "An Unknown Error Occured" });
     }
   }
 });

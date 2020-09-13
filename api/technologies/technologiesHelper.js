@@ -4,6 +4,7 @@ module.exports = {
   getAll,
   getTechnologyById,
   addTechnology,
+  updateTechnology,
   checkForTechnology,
 };
 
@@ -17,6 +18,10 @@ async function getTechnologyById(id) {
 
 async function addTechnology(newTechnology) {
   return db("technologies").insert(newTechnology);
+}
+
+async function updateTechnology(id, changes) {
+  return db("technologies").where("id", Number(id)).update(changes);
 }
 
 async function checkForTechnology(newTechnology) {

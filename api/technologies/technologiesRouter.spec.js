@@ -67,15 +67,37 @@ describe("Technologies Route Handlers", () => {
       const res = await request(server)
         .post("/technologies")
         .send({ technology: "Javascript" });
-      expect(res.body).toEqual([
-        { id: 1, technology: "React" },
-        { id: 2, technology: "Javascript" },
-      ]);
+      expect(res.body[1]).toEqual({ id: 2, technology: "Javascript" });
     });
   });
 
   // EDIT TECHNOLOGY
-  //   describe("PUT /:id", () => {
+  describe("PUT /:id", () => {
+    it("res status 202", async () => {
+      const res = await request(server)
+        .put("/technologies/1")
+        .send({ technology: "Vue" });
+      expect(res.status).toBe(202);
+    });
 
-  //   });
+    it("res with json", async () => {
+      const res = await request(server)
+        .put("/technologies/1")
+        .send({ technology: "Vue" });
+      expect(res.type).toMatch(/json/i);
+    });
+
+    it("res with correct data", async () => {
+      const res = await request(server)
+        .put("/technologies/1")
+        .send({ technology: "Vue" });
+      console.log(res.body);
+      expect(res.body[0]).toEqual({ id: 1, technology: "Vue" });
+    });
+  });
+
+  // REMOVE TECHNOLOGY
+  // describe("DELETE /:id", () => {
+
+  // });
 });
