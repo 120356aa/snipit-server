@@ -2,116 +2,73 @@ const request = require("supertest");
 const server = require("../../index.js");
 const db = require("../../data/db.js");
 
+let securityLevels = [
+  { security_level: "User" },
+  { security_level: "Admin" }
+];
+
 describe("Security Clearance Route Handlers", () => {
   beforeEach(async () => {
-    await db("security_clearance").insert({ security_level: "User" });
+    await db("security_clearance").insert(securityLevels);
   });
 
   afterEach(async () => {
     await db("security_clearance").truncate();
   });
 
-    // GET All
-    describe("GET /", () => {
-      it("res status 200", async () => {
-        const res = await request(server).get("/security_clearance");
-        expect(res.status).toBe(200);
-      });
-  
-      it("res with json", async () => {
-        const res = await request(server).get("/security_clearance");
-        expect(res.type).toMatch(/json/i);
-      });
-  
-      it("res returns data", async () => {
-        const res = await request(server).get("/security_clearance");
-        expect(res.body).toEqual([{ id: 1, security_level: "User" }]);
-      });
+  // GET ALL
+  describe("GET /", () => {
+    test("Returns an array of security levels", async () => {
+      const res = await request(server).get("/security_clearance");
+      expect(res.status).toBe(200);
+      expect(res.type).toMatch(/json/i);
+      expect(res.body.length).toBe(2);
     });
+  });
 
   // GET BY ID
   describe("GET /:id", () => {
-    it("res status 200", async () => {
+    test("Returns security level by ID", async () => {
       const res = await request(server).get("/security_clearance/1");
       expect(res.status).toBe(200);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server).get("/security_clearance/1");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server).get("/security_clearance/1");
       expect(res.body).toEqual([{ id: 1, security_level: "User" }]);
     });
   });
 
-  // ADD SECURITY CLEARANCE
-  describe("POST /:id", () => {
-    it("res status 201", async () => {
+  // ADD SECURITY LEVEL
+  describe("POST /", () => {
+    test("Adds new security level", async () => {
       const res = await request(server)
         .post("/security_clearance")
-        .send({ security_level: "Admin" });
+        .send({ security_level: "Pleb" });
       expect(res.status).toBe(201);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server)
-        .post("/security_clearance")
-        .send({ security_level: "Admin" });
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server)
-        .post("/security_clearance")
-        .send({ security_level: "Admin" });
-      expect(res.body[1]).toEqual({ id: 2, security_level: "Admin" });
+      expect(res.body.length).toBe(3)
+      expect(res.body[2]).toEqual({ id: 3, security_level: "Pleb" });
     });
   });
 
-  // EDIT SECURITY CLEARANCE
+  // EDIT SECURITY LEVEL
   describe("PUT /:id", () => {
-    it("res status 202", async () => {
+    test("Updates security level by ID", async () => {
       const res = await request(server)
         .put("/security_clearance/1")
         .send({ security_level: "Pleb" });
       expect(res.status).toBe(202);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server)
-        .put("/security_clearance/1")
-        .send({ security_level: "Pleb" });
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server)
-        .put("/security_clearance/1")
-        .send({ security_level: "Pleb" });
+      expect(res.body.length).toBe(2);
       expect(res.body[0]).toEqual({ id: 1, security_level: "Pleb" });
     });
   });
 
-  // REMOVE SECURITY CLEARANCE
+  // REMOVE SECURITY LEVEL
   describe("DELETE /:id", () => {
-    it("res status 202", async () => {
-      await request(server).post("/security_clearance").send({ security_level: "Admin" });
+    test("Delete security level by ID", async () => {
       const res = await request(server).del("/security_clearance/1");
       expect(res.status).toBe(202);
-    });
-
-    it("res with json", async () => {
-      await request(server).post("/security_clearance").send({ security_level: "Admin" });
-      const res = await request(server).del("/security_clearance/1");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      await request(server).post("/security_clearance").send({ security_level: "Admin" });
-      const res = await request(server).del("/security_clearance/1");
+      expect(res.body.length).toBe(1);
       expect(res.body[0]).toEqual({ id: 2, security_level: "Admin" });
     });
   });

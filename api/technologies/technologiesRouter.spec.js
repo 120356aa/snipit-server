@@ -2,117 +2,74 @@ const request = require("supertest");
 const server = require("../../index.js");
 const db = require("../../data/db.js");
 
+let technologies = [
+  { technology: "React" },
+  { technology: "Javascript" }
+];
+
 describe("Technologies Route Handlers", () => {
   beforeEach(async () => {
-    await db("technologies").insert({ technology: "React" });
+    await db("technologies").insert(technologies);
   });
 
   afterEach(async () => {
     await db("technologies").truncate();
   });
 
-  // GET All
+  // GET ALL
   describe("GET /", () => {
-    it("res status 200", async () => {
+    test("Returns an array of technologies", async () => {
       const res = await request(server).get("/technologies");
       expect(res.status).toBe(200);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server).get("/technologies");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res returns data", async () => {
-      const res = await request(server).get("/technologies");
-      expect(res.body).toEqual([{ id: 1, technology: "React" }]);
+      expect(res.body.length).toBe(2);
     });
   });
 
   // GET BY ID
   describe("GET /:id", () => {
-    it("res status 200", async () => {
+    test("Returns technology by ID", async () => {
       const res = await request(server).get("/technologies/1");
       expect(res.status).toBe(200);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server).get("/technologies/1");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server).get("/technologies/1");
       expect(res.body).toEqual([{ id: 1, technology: "React" }]);
     });
   });
 
   // ADD TECHNOLOGY
-  describe("POST /:id", () => {
-    it("res status 201", async () => {
+  describe("POST /", () => {
+    test("Adds new technology", async () => {
       const res = await request(server)
         .post("/technologies")
-        .send({ technology: "Javascript" });
+        .send({ technology: "Pleb" });
       expect(res.status).toBe(201);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server)
-        .post("/technologies")
-        .send({ technology: "Javascript" });
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server)
-        .post("/technologies")
-        .send({ technology: "Javascript" });
-      expect(res.body[1]).toEqual({ id: 2, technology: "Javascript" });
+      expect(res.body.length).toBe(3)
+      expect(res.body[2]).toEqual({ id: 3, technology: "Pleb" });
     });
   });
 
   // EDIT TECHNOLOGY
   describe("PUT /:id", () => {
-    it("res status 202", async () => {
+    test("Updates technology by ID", async () => {
       const res = await request(server)
         .put("/technologies/1")
-        .send({ technology: "Vue" });
+        .send({ technology: "Pleb" });
       expect(res.status).toBe(202);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server)
-        .put("/technologies/1")
-        .send({ technology: "Vue" });
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server)
-        .put("/technologies/1")
-        .send({ technology: "Vue" });
-      expect(res.body[0]).toEqual({ id: 1, technology: "Vue" });
+      expect(res.body.length).toBe(2);
+      expect(res.body[0]).toEqual({ id: 1, technology: "Pleb" });
     });
   });
 
   // REMOVE TECHNOLOGY
   describe("DELETE /:id", () => {
-    it("res status 202", async () => {
-      await request(server).post("/technologies").send({ technology: "Vue" });
+    test("Delete technology by ID", async () => {
       const res = await request(server).del("/technologies/1");
       expect(res.status).toBe(202);
-    });
-
-    it("res with json", async () => {
-      await request(server).post("/technologies").send({ technology: "Vue" });
-      const res = await request(server).del("/technologies/1");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      await request(server).post("/technologies").send({ technology: "Vue" });
-      const res = await request(server).del("/technologies/1");
-      expect(res.body[0]).toEqual({ id: 2, technology: "Vue" });
+      expect(res.body.length).toBe(1);
+      expect(res.body[0]).toEqual({ id: 2, technology: "Javascript" });
     });
   });
 });

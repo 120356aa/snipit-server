@@ -2,116 +2,73 @@ const request = require("supertest");
 const server = require("../../index.js");
 const db = require("../../data/db.js");
 
+let snippetAuthorizations = [
+  { authorization: "Public" },
+  { authorization: "Private" }
+];
+
 describe("Snippet Authorization Route Handlers", () => {
   beforeEach(async () => {
-    await db("snippet_authorization").insert({ authorization: "Public" });
+    await db("snippet_authorization").insert(snippetAuthorizations);
   });
 
   afterEach(async () => {
     await db("snippet_authorization").truncate();
   });
 
-  // GET All
+  // GET ALL
   describe("GET /", () => {
-    it("res status 200", async () => {
+    test("Returns an array of report categories", async () => {
       const res = await request(server).get("/snippet_authorization");
       expect(res.status).toBe(200);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server).get("/snippet_authorization");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res returns data", async () => {
-      const res = await request(server).get("/snippet_authorization");
-      expect(res.body).toEqual([{ id: 1, authorization: "Public" }]);
+      expect(res.body.length).toBe(2);
     });
   });
 
   // GET BY ID
   describe("GET /:id", () => {
-    it("res status 200", async () => {
+    test("Returns report category by ID", async () => {
       const res = await request(server).get("/snippet_authorization/1");
       expect(res.status).toBe(200);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server).get("/snippet_authorization/1");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server).get("/snippet_authorization/1");
       expect(res.body).toEqual([{ id: 1, authorization: "Public" }]);
     });
   });
 
-  // ADD SNIPPET AUTHORIZATION
-  describe("POST /:id", () => {
-    it("res status 201", async () => {
+  // ADD REPORT CATEGORY
+  describe("POST /", () => {
+    test("Adds new report category", async () => {
       const res = await request(server)
         .post("/snippet_authorization")
-        .send({ authorization: "Private" });
+        .send({ authorization: "Pleb" });
       expect(res.status).toBe(201);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server)
-        .post("/snippet_authorization")
-        .send({ authorization: "Private" });
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server)
-        .post("/snippet_authorization")
-        .send({ authorization: "Private" });
-      expect(res.body[1]).toEqual({ id: 2, authorization: "Private" });
+      expect(res.body.length).toBe(3)
+      expect(res.body[2]).toEqual({ id: 3, authorization: "Pleb" });
     });
   });
 
-  // EDIT SNIPPET AUTHORIZATION
+  // EDIT REPORT CATEGORY
   describe("PUT /:id", () => {
-    it("res status 202", async () => {
+    test("Updates report category by ID", async () => {
       const res = await request(server)
         .put("/snippet_authorization/1")
         .send({ authorization: "Pleb" });
       expect(res.status).toBe(202);
-    });
-
-    it("res with json", async () => {
-      const res = await request(server)
-        .put("/snippet_authorization/1")
-        .send({ authorization: "Pleb" });
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      const res = await request(server)
-        .put("/snippet_authorization/1")
-        .send({ authorization: "Pleb" });
+      expect(res.body.length).toBe(2);
       expect(res.body[0]).toEqual({ id: 1, authorization: "Pleb" });
     });
   });
 
-  // REMOVE SNIPPET AUTHORIZATION
+  // REMOVE REPORT CATEGORY
   describe("DELETE /:id", () => {
-    it("res status 202", async () => {
-      await request(server).post("/snippet_authorization").send({ authorization: "Private" });
+    test("Delete report category by ID", async () => {
       const res = await request(server).del("/snippet_authorization/1");
       expect(res.status).toBe(202);
-    });
-
-    it("res with json", async () => {
-      await request(server).post("/snippet_authorization").send({ authorization: "Private" });
-      const res = await request(server).del("/snippet_authorization/1");
       expect(res.type).toMatch(/json/i);
-    });
-
-    it("res with correct data", async () => {
-      await request(server).post("/snippet_authorization").send({ authorization: "Private" });
-      const res = await request(server).del("/snippet_authorization/1");
+      expect(res.body.length).toBe(1);
       expect(res.body[0]).toEqual({ id: 2, authorization: "Private" });
     });
   });

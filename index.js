@@ -7,7 +7,6 @@ const APP_URL = process.env.APP_URL || "http://localhost:3000";
 const request = require("request");
 const helmet = require("helmet"); // Extra security
 const morgan = require("morgan"); // Debugging Tool
-// const middlewares = require("./middlewares");
 
 // const usersRouter = require("./api/users/usersRouter");
 // const snippetsRouter = require("./api/snippets/snippetsRouter");
@@ -27,13 +26,6 @@ const server = express();
 
 // init server
 server.use(express.json(), cors(corsOptions), helmet(), morgan("common"));
-
-// Sanity Check
-server.get("/", (req, res) => res.status(200).json("Server running"));
-
-// Simple Error Handling
-// server.use(middlewares.notFound); // 404 Handler
-// server.use(middlewares.errHandler); // Specified Error
 
 // User Routes
 // server.use("/users", usersRouter);
