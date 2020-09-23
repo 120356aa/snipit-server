@@ -8,7 +8,7 @@ const request = require("request");
 const helmet = require("helmet"); // Extra security
 const morgan = require("morgan"); // Debugging Tool
 
-// const usersRouter = require("./api/users/usersRouter");
+const usersRouter = require("./api/users/usersRouter");
 // const snippetsRouter = require("./api/snippets/snippetsRouter");
 const technologiesRouter = require("./api/technologies/technologiesRouter.js");
 const accountTypeRouter = require("./api/accountType/accountTypeRouter");
@@ -28,7 +28,7 @@ const server = express();
 server.use(express.json(), cors(corsOptions), helmet(), morgan("common"));
 
 // User Routes
-// server.use("/users", usersRouter);
+server.use("/users", usersRouter);
 // server.use("/snippets", snippetsRouter);
 
 // Admin Routes
@@ -37,6 +37,7 @@ server.use("/account_type", accountTypeRouter);
 server.use("/security_clearance", securityClearanceRouter);
 server.use("/snippet_authorization", snippetAuthorizationRouter);
 server.use("/report_category", reportCategoryRouter);
+
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
